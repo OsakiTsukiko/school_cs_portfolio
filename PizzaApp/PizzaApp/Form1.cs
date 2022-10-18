@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace PizzaApp
 {
@@ -255,6 +256,89 @@ namespace PizzaApp
             if (res == DialogResult.Yes)
             {
                 this.Close();
+            }
+        }
+
+        private void saveBtn_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Text Files|*.txt";
+            sfd.Title = "Save to File";
+            sfd.FileName = "bon";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                String output = "";
+
+                if (sc_s.Checked)
+                {
+                    output += "Pizza Mica: " + si_s.Text + "\n";
+                }
+
+                if (sc_m.Checked)
+                {
+                    output += "Pizza Medie: " + si_m.Text + "\n";
+                }
+
+                if (sc_l.Checked)
+                {
+                    output += "Pizza Mare: " + si_l.Text + "\n";
+                }
+
+                if (Convert.ToDouble(ma_s.Text) != 0.0)
+                {
+                    output += "Meniu Aripioare: " + ma_s.Text + "\n";
+                }
+
+                if (Convert.ToDouble(ct_s.Text) != 0.0)
+                {
+                    output += "Cartofi traditionali cu sos extra: " + ct_s.Text + "\n";
+                }
+
+                double ei_c = Convert.ToDouble(ei.Text);
+
+                if (ei_1.Checked) { output += "Rosii proaspete: " + ei.Text + "\n"; }
+                if (ei_2.Checked) { output += "Ardei gras: " + ei.Text + "\n"; }
+                if (ei_3.Checked) { output += "Ciuperci proaspete: " + ei.Text + "\n"; }
+                if (ei_4.Checked) { output += "Masline negre: " + ei.Text + "\n"; }
+                if (ei_5.Checked) { output += "Ceapa rosie: " + ei.Text + "\n"; }
+                if (ei_6.Checked) { output += "Porumb: " + ei.Text + "\n"; }
+
+                if (Convert.ToDouble(b_1_s.Text) != 0.0)
+                {
+                    output += "Apa Plata: " + b_1_s.Text + "\n";
+                }
+
+                if (Convert.ToDouble(b_2_s.Text) != 0.0)
+                {
+                    output += "Apa Minerala: " + b_2_s.Text + "\n";
+                }
+
+                if (Convert.ToDouble(b_3_s.Text) != 0.0)
+                {
+                    output += "Coca Cola: " + b_3_s.Text + "\n";
+                }
+
+                if (Convert.ToDouble(b_4_s.Text) != 0.0)
+                {
+                    output += "Fanta: " + b_4_s.Text + "\n";
+                }
+
+                if (Convert.ToDouble(b_5_s.Text) != 0.0)
+                {
+                    output += "Suc natural de fructe: " + b_5_s.Text  + "\n";
+                }
+
+                if (Convert.ToDouble(b_6_s.Text) != 0.0)
+                {
+                    output += "Cafea: " + b_6_s.Text + "\n";
+                }
+
+                String s = String.Format("{0:0.00}", tp.Text);
+                output += "Total: " + Convert.ToString(s) + "\n";
+
+                TextWriter txt = new StreamWriter(Path.GetFullPath(sfd.FileName));
+                txt.Write(output);
+                txt.Close();
             }
         }
     }
